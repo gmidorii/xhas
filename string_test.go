@@ -1,6 +1,17 @@
-package xhas
+package xhas_test
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+
+	"github.com/gmidorii/xhas"
+)
+
+func ExampleString() {
+	ok := xhas.String("hoge", []string{"fuga", "hoge", "null"})
+	fmt.Println(ok)
+	// Output: true
+}
 
 func TestString(t *testing.T) {
 	type args struct {
@@ -55,7 +66,7 @@ func TestString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := String(tt.args.dst, tt.args.src); got != tt.want {
+			if got := xhas.String(tt.args.dst, tt.args.src); got != tt.want {
 				t.Errorf("String() = %v, want %v", got, tt.want)
 			}
 		})
