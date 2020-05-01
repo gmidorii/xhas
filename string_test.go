@@ -73,6 +73,78 @@ func TestString(t *testing.T) {
 	}
 }
 
+func TestStringNotOne(t *testing.T) {
+	type args struct {
+		dst string
+		src []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "src donot has dst",
+			args: args{
+				dst: "abc",
+				src: []string{"def", "hoge", "fuga"},
+			},
+			want: true,
+		},
+		{
+			name: "src has dst",
+			args: args{
+				dst: "abc",
+				src: []string{"def", "hoge", "abc"},
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := xhas.StringNotOne(tt.args.dst, tt.args.src); got != tt.want {
+				t.Errorf("StringNotOne() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestStringAll(t *testing.T) {
+	type args struct {
+		dst string
+		src []string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "src match all dst",
+			args: args{
+				dst: "abc",
+				src: []string{"abc", "abc", "abc"},
+			},
+			want: true,
+		},
+		{
+			name: "src match one dst",
+			args: args{
+				dst: "abc",
+				src: []string{"def", "abc", "hoge"},
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := xhas.StringAll(tt.args.dst, tt.args.src); got != tt.want {
+				t.Errorf("StringAll() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
 func TestStringPre(t *testing.T) {
 	type args struct {
 		prefix string
