@@ -21,6 +21,23 @@ func intAny(dst int, src []int, ope func(want, target int) bool) bool {
 	return false
 }
 
+func IntOddAll(src []int) bool {
+	return intNot(2, src, func(want, target int) bool { return (target % want) != 1 })
+}
+
+func IntEvenAll(src []int) bool {
+	return intNot(2, src, func(want, target int) bool { return (target % want) != 0 })
+}
+
+func intNot(dst int, src []int, ope func(want, target int) bool) bool {
+	for _, s := range src {
+		if ope(dst, s) {
+			return false
+		}
+	}
+	return true
+}
+
 func Int16(dst int16, src []int16) bool {
 	for _, s := range src {
 		if dst == s {

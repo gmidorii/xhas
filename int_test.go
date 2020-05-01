@@ -107,3 +107,69 @@ func TestIntEven(t *testing.T) {
 		})
 	}
 }
+
+func TestIntOddAll(t *testing.T) {
+	type args struct {
+		src []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "all odd",
+			args: args{
+				src: []int{1, 3, 5, 13},
+			},
+			want: true,
+		},
+		{
+			name: "not all odd",
+			args: args{
+				src: []int{1, 3, 4, 7},
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := xhas.IntOddAll(tt.args.src); got != tt.want {
+				t.Errorf("IntOddAll() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestIntEvenAll(t *testing.T) {
+	type args struct {
+		src []int
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "all even",
+			args: args{
+				src: []int{2, 4, 8, 14},
+			},
+			want: true,
+		},
+		{
+			name: "not all even",
+			args: args{
+				src: []int{2, 4, 9, 14},
+			},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := xhas.IntEvenAll(tt.args.src); got != tt.want {
+				t.Errorf("IntEvenAll() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
