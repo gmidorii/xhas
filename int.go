@@ -1,8 +1,20 @@
 package xhas
 
 func Int(dst int, src []int) bool {
+	return intAny(dst, src, func(want, target int) bool { return target == want })
+}
+
+func IntOdd(src []int) bool {
+	return intAny(2, src, func(want, target int) bool { return (target % want) == 1 })
+}
+
+func IntEven(src []int) bool {
+	return intAny(2, src, func(want, target int) bool { return (target % want) == 0 })
+}
+
+func intAny(dst int, src []int, ope func(want, target int) bool) bool {
 	for _, s := range src {
-		if dst == s {
+		if ope(dst, s) {
 			return true
 		}
 	}
