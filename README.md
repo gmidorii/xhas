@@ -1,5 +1,7 @@
 # xhas
 
+[![GoDoc](https://godoc.org/github.com/gmidorii/xhas?status.svg)](https://godoc.org/github.com/gmidorii/xhas)
+
 ## Getting Started
 
 ### Installing
