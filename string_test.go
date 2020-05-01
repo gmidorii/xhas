@@ -72,3 +72,116 @@ func TestString(t *testing.T) {
 		})
 	}
 }
+
+func TestStringPre(t *testing.T) {
+	type args struct {
+		prefix string
+		src    []string
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want  string
+		want1 bool
+	}{
+		{
+			name: "src has match prefix",
+			args: args{
+				prefix: "yyy",
+				src:    []string{"xxx_a", "yyy_b", "zzz_c"},
+			},
+			want:  "yyy_b",
+			want1: true,
+		},
+		{
+			name: "return first match src",
+			args: args{
+				prefix: "yyy",
+				src:    []string{"xxx_a", "yyy_b", "yyy_c", "yyy_d"},
+			},
+			want:  "yyy_b",
+			want1: true,
+		},
+		{
+			name: "not found",
+			args: args{
+				prefix: "aaa",
+				src:    []string{"xxx_a", "yyy_b", "zzz_c"},
+			},
+			want:  "",
+			want1: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, got1 := xhas.StringPre(tt.args.prefix, tt.args.src)
+			if got != tt.want {
+				t.Errorf("StringPre() got = %v, want %v", got, tt.want)
+			}
+			if got1 != tt.want1 {
+				t.Errorf("StringPre() got1 = %v, want %v", got1, tt.want1)
+			}
+		})
+	}
+}
+
+func TestStringPartRune(t *testing.T) {
+	type args struct {
+		dst rune
+		src []string
+	}
+	tests := []struct {
+		name  string
+		args  args
+		want  string
+		want1 bool
+	}{
+		{
+			name: "src has dst",
+			args: args{
+				dst: 'a',
+				src: []string{"aaa", "bbb", "ccc"},
+			},
+			want:  "aaa",
+			want1: true,
+		},
+		{
+			name: "first match",
+			args: args{
+				dst: 'a',
+				src: []string{"aaa1", "aaa2", "aaa3"},
+			},
+			want:  "aaa1",
+			want1: true,
+		},
+		{
+			name: "japanese",
+			args: args{
+				dst: '日',
+				src: []string{"あいうえお", "日本", "こんにちは"},
+			},
+			want:  "日本",
+			want1: true,
+		},
+		{
+			name: "emoji",
+			args: args{
+				dst: '👍',
+				src: []string{"🙇🙇🙇🙇🙇🙇", "🏡👍🏡🏡", "🏠"},
+			},
+			want:  "🏡👍🏡🏡",
+			want1: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, got1 := xhas.StringPartRune(tt.args.dst, tt.args.src)
+			if got != tt.want {
+				t.Errorf("StringPartRune() got = %v, want %v", got, tt.want)
+			}
+			if got1 != tt.want1 {
+				t.Errorf("StringPartRune() got1 = %v, want %v", got1, tt.want1)
+			}
+		})
+	}
+}
